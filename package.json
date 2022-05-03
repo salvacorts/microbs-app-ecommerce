@@ -1,0 +1,32 @@
+{
+  "name": "@microbs.io/app-ecommerce",
+  "version": "0.1.0-alpha",
+  "description": "microbs app - ecommerce",
+  "license": "Apache-2.0",
+  "url": "https://microbs.io/docs/apps/ecommerce/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microbs-io/microbs-app-ecommerce.git"
+  },
+  "keywords": [
+    "microbs",
+    "app",
+    "ecommerce"
+  ],
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "silent": false,
+    "verbose": true
+  },
+  "engines": {
+    "node": ">=14.16.1"
+  },
+  "dependencies": {
+    "@microbs.io/core": "^0.1.7-alpha"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
