@@ -63,7 +63,6 @@ profiles:
   build:
     artifacts:
     - image: microbs-ecommerce-product
-      context: ./apps/ecommerce
       docker:
         dockerfile: ./variants/basic-bug/product/Dockerfile
   deploy:
@@ -75,7 +74,6 @@ profiles:
   build:
     artifacts:
     - image: microbs-ecommerce-api-gateway
-      context: ./apps/ecommerce
       docker:
         dockerfile: ./variants/bind-localhost/api-gateway/Dockerfile
   deploy:
