@@ -154,10 +154,9 @@ def healthz():
     return jsonify({ 'healthy': True })
 
 # Unhandled exceptions
+@app.errorhandler(403)
 @app.errorhandler(Exception)
 def handle_exception(e):
-    if isinstance(e, HTTPException):
-        return e
     logger.exception(e, extra={
         'tags': [
             ( 'ip', request.environ.get('REMOTE_ADDR') ),
@@ -169,6 +168,8 @@ def handle_exception(e):
     span.record_exception(e)
     span.set_attribute('event.outcome', 'failure')
     span.set_status(Status(StatusCode.ERROR))
+    if isinstance(e, HTTPException):
+        return e
     return jsonify({
         'message': getattr(e, 'message', repr(e)),
         'stacktrace': traceback.format_exc()
