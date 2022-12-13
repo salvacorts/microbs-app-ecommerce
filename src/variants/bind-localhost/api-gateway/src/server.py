@@ -36,7 +36,7 @@ def proxy_base(service):
     """
     Forward API requests to services.
     """
-    url = "http://{}.default.svc.cluster.local/".format(service)
+    url = "http://{}/".format(service)
     headers = dict(request.headers)
     headers.pop('Connection', None)
     headers.pop('Content-Encoding', None)
