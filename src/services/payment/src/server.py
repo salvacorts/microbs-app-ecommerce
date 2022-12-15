@@ -5,14 +5,18 @@ import re
 import time
 
 # Third-party packages
-from flask import jsonify, request
+from flask import jsonify, request, Response
 from opentelemetry import trace
 from opentelemetry.trace.status import Status, StatusCode
+from prometheus_client import generate_latest, Counter
+
 
 # Service packages
 from common import app, config, logger
 
 RE_NON_DIGITS = re.compile(r'[^0-9]')
+
+payments_counter = Counter('payments', 'Total number of payments')
 
 def process_payment(card_number, amount):
     """
@@ -50,7 +54,15 @@ def post_payment():
         span.set_status(Status(StatusCode.ERROR))
         return jsonify({ 'message': 'failure', 'reason': 'Invalid card number' }), 400
     process_payment(data.get('card', {}).get('number'), data.get('amount'))
+    payments_counter.inc()
     return jsonify({ 'message': 'success' })
+
+@app.route('/metrics')
+def metrics():
+    """
+    Get metrics.
+    """
+    return Response(generate_latest(), mimetype='text/plain')
 
 @app.route('/')
 def home():
